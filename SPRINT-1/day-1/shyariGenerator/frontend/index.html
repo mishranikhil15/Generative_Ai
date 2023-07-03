@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>OpenAI API Example</title>
+</head>
+<body>
+  <h1>OpenAI API Example</h1>
+
+  <div>
+    <label for="keyword">Keyword:</label>
+    <input type="text" id="keyword" placeholder="Enter a keyword">
+  </div>
+
+  <div>
+    <label for="category">Category:</label>
+    <select id="category">
+      <option value="shayari">Shayari</option>
+      <option value="joke">Joke</option>
+      <option value="story">Story</option>
+      <option value="quote">Quote</option>
+    </select>
+  </div>
+
+  <button onclick="generatePrompt()">Generate</button>
+
+  <div id="output"></div>
+
+  <script>
+    function generatePrompt() {
+      const keyword = document.getElementById('keyword').value;
+      const category = document.getElementById('category').value;
+      const outputDiv = document.getElementById('output');
+      outputDiv.textContent = 'Loading...';
+
+      // Make a request to the backend endpoint
+      fetch(`http://localhost:3000/generate?keyword=${encodeURIComponent(keyword)}&category=${encodeURIComponent(category)}`)
+        .then(response => response.text())
+        .then(data => {
+          outputDiv.textContent = data;
+        })
+        .catch(error => {
+          console.log(error);
+          outputDiv.textContent = 'An error occurred. Please try again.';
+        }); 
+    }
+  </script>
+</body>
+</html>
