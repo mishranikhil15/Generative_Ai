@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Contact List</title>
+    <!-- <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='styles.css') }}"> -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <h1>Contact List</h1>
+    <div class="contact-form">
+        <h2>Add New Contact</h2>
+        <form id="create-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required><br>
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required><br>
+
+            <label for="phone">Phone:</label>
+            <input type="text" id="phone" name="phone" required><br>
+
+            <button type="submit">Add Contact</button>
+        </form>
+    </div>
+
+    <div id="contact-list">
+        <h2>Contact List</h2>
+        <ul id="contacts">
+            {% for contact in contacts %}
+                <li>
+                    <span class="contact-name">{{ contact.name }}</span>
+                    <span class="contact-email">{{ contact.email }}</span>
+                    <span class="contact-phone">{{ contact.phone }}</span>
+                    <span class="contact-actions">
+                        <button class="edit-btn" data-index="{{ loop.index0 }}">Edit</button>
+                        <button class="delete-btn" data-index="{{ loop.index0 }}">Delete</button>
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div id="edit-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Edit Contact</h2>
+            <form id="edit-form">
+                <input type="hidden" id="edit-index">
+                <label for="edit-name">Name:</label>
+                <input type="text" id="edit-name" name="name" required><br>
+
+                <label for="edit-email">Email:</label>
+                <input type="email" id="edit-email" name="email" required><br>
+
+                <label for="edit-phone">Phone:</label>
+                <input type="text" id="edit-phone" name="phone" required><br>
+
+                <button type="submit">Update Contact</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- <script src="{{ url_for('static', filename='script.js') }}"></script> -->
+    <script src="./main.js"></script>
+</body>
+</html>
