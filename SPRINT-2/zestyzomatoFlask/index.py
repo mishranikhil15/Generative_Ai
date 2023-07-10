@@ -12,40 +12,38 @@ orders = []
 order_id_counter = 1
 
 
-@app.route('/menu', methods=['GET'])
+@app.route('/menu', methods=['GET', 'POST'])
 def get_menu():
-    return jsonify(menu)
+    if request.method == 'GET':
+        return jsonify(menu)
+    elif request.method == 'POST':
+        dish = request.get_json()
+        menu.append(dish)
+        return jsonify({'message': 'Dish added successfully.'})
 
 
-@app.route('/menu', methods=['POST'])
-def add_dish():
-    dish = request.get_json()
-    menu.append(dish)
-    return jsonify({'message': 'Dish added successfully.'})
-
-
-@app.route('/menu/<dish_id>', methods=['PATCH'])
-def update_dish_availability(dish_id):
-    for dish in menu:
-        if dish['dish_id'] == dish_id:
-            dish['availability'] = request.json['availability']
-            return jsonify({'message': 'Dish availability updated successfully.'})
-    return jsonify({'message': 'Dish not found.'}), 404
-
-
-@app.route('/menu/<dish_id>', methods=['DELETE'])
-def remove_dish(dish_id):
-    for dish in menu:
-        if dish['dish_id'] == dish_id:
-            menu.remove(dish)
-            return jsonify({'message': 'Dish removed successfully.'})
-    return jsonify({'message': 'Dish not found.'}), 404
+@app.route('/menu/<dish_id>', methods=['PATCH', 'DELETE'])
+def update_or_remove_dish(dish_id):
+    if request.method == 'PATCH':
+        availability = request.json.get('availability')
+        for dish in menu:
+            if dish['dish_id'] == dish_id:
+                dish['availability'] = availability
+                return jsonify({'message': 'Dish availability updated successfully.'})
+        return jsonify({'message': 'Dish not found.'}), 404
+    elif request.method == 'DELETE':
+        for dish in menu:
+            if dish['dish_id'] == dish_id:
+                menu.remove(dish)
+                return jsonify({'message': 'Dish removed successfully.'})
+        return jsonify({'message': 'Dish not found.'}), 404
 
 
 @app.route('/order', methods=['POST'])
 def place_order():
     order = request.get_json()
-    for dish_id in order['dish_ids']:
+    dish_ids = order.get('dish_ids', [])
+    for dish_id in dish_ids:
         dish = next((dish for dish in menu if dish['dish_id'] == dish_id), None)
         if not dish or dish['availability'] != 'yes':
             return jsonify({'message': 'Invalid dish ID or dish not available.'}), 400
@@ -53,7 +51,7 @@ def place_order():
     new_order = {
         'order_id': order_id_counter,
         'customer_name': order['customer_name'],
-        'dish_ids': order['dish_ids'],
+        'dish_ids': dish_ids,
         'status': 'received'
     }
     orders.append(new_order)
@@ -63,7 +61,7 @@ def place_order():
 
 @app.route('/order/<order_id>', methods=['PATCH'])
 def update_order_status(order_id):
-    new_status = request.json['status']
+    new_status = request.json.get('status')
     for order in orders:
         if order['order_id'] == int(order_id):
             order['status'] = new_status
@@ -83,20 +81,3 @@ def exit_app():
 
 if __name__ == '__main__':
     app.run(debug=True)
-
-
-# {
-#   "dish_id": "1",
-#   "dish_name": "Burger",
-#   "price": 12.99,
-#   "availability": "no"
-# }
-
-# {
-#   "customer_name": "John Doe",
-#   "dish_ids": "1"
-# }
-
-# {
-#   "status": "preparing"
-# }

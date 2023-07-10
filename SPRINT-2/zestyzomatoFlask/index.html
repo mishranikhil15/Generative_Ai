@@ -1,0 +1,68 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Zesty Zomato</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+    <h1>Zesty Zomato</h1>
+
+    <h2>Menu</h2>
+    <ul id="menu-list"></ul>
+
+    <h2>Add Dish</h2>
+    <form id="add-dish-form">
+        <label for="dish-id">Dish ID:</label>
+        <input type="text" id="dish-id" required>
+
+        <label for="dish-name">Dish Name:</label>
+        <input type="text" id="dish-name" required>
+
+        <label for="price">Price:</label>
+        <input type="number" id="price" step="0.01" required>
+
+        <label for="availability">Availability:</label>
+        <select id="availability" required>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+        </select>
+
+        <button type="submit">Add Dish</button>
+    </form>
+
+    <h2>Place Order</h2>
+    <form id="place-order-form">
+        <label for="customer-name">Customer Name:</label>
+        <input type="text" id="customer-name" required>
+
+        <label for="dish-ids">Select Dishes:</label>
+        <select id="dish-ids" multiple required>
+            <!-- Options will be populated dynamically -->
+        </select>
+
+        <button type="submit">Place Order</button>
+    </form>
+
+    <h2>Update Order Status</h2>
+    <form id="update-order-form">
+        <label for="order-id">Order ID:</label>
+        <input type="number" id="order-id" required>
+
+        <label for="status">Status:</label>
+        <select id="status" required>
+            <option value="received">Received</option>
+            <option value="preparing">Preparing</option>
+            <option value="ready for pickup">Ready for Pickup</option>
+            <option value="delivered">Delivered</option>
+        </select>
+
+        <button type="submit">Update Status</button>
+    </form>
+
+    <h2>Orders</h2>
+    <ul id="orders-list"></ul>
+
+    <script src="script.js"></script>
+</body>
+</html>
