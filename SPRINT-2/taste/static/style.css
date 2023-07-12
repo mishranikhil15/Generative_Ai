@@ -56,7 +56,7 @@
   .container {
     min-width: 90vw;
     padding: 20px;
-    background-color: teal;
+    background-color: navajowhite;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     border-radius: 5px;
   }
@@ -91,7 +91,7 @@
   }
 
   button {
-    background-color: #4caf99;
+    background-color: yellowgreen;
     color: #fff;
     padding: 10px 20px;
     border: none;

@@ -78,11 +78,11 @@ class Restaurant:
                 return "order status updated."
         return "Order not found in orders."
 
-dish1 = Dish("Spaghetti Carbonara", 1, 12.99, "yes")
-dish2 = Dish("Margherita Pizza", 2, 10.99, "yes")
-dish3 = Dish("Chicken Tikka Masala", 3, 14.99, "yes")
-dish4 = Dish("Caesar Salad", 4, 8.99, "yes")
-dish5 = Dish("Beef Burger", 5, 9.99, "yes")
+dish1 = Dish("Fish and Chips", 1, 11.99, "yes")
+dish2 = Dish("Pepperoni Pizza", 2, 13.99, "yes")
+dish3 = Dish("Veggie Pad Thai", 3, 12.99, "yes")
+dish4 = Dish("Greek Salad", 4, 7.99, "yes")
+dish5 = Dish("Grilled Chicken Sandwich", 5, 10.99, "yes")
 
 id = 6
 
