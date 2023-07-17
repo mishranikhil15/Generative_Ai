@@ -18,8 +18,14 @@ company = {
 
 def average_age(company):
     # print(company)
-    age=0
-    age+=company.employees
-    print(age)
+    employees = company['employees']
+    total_age = 0
+    num_employees = len(employees)
+
+    for employee in employees.values():
+        total_age += employee['age']
+
+    average_age = total_age / num_employees
+    print(average_age)
   
 average_age(company);    
